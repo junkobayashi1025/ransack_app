@@ -1,3 +1,5 @@
+<h1>現状</h1>
+<h3>※調べたいキーワードを所定の検索窓に入力し、検索する</h3>
 <%= search_form_for @q do |f| %>
   <%= f.label :title, "タイトルを入力" %>
   <%= f.search_field :title_cont %>
@@ -5,9 +7,26 @@
   <%= f.label :auther, "作者を入力" %>
   <%= f.search_field :auther_cont %>
 
+  <%= f.label :genre, "ジャンルを入力" %>
+  <%= f.search_field :genre_cont %>
+
   <%= f.label :price %>
   <%= f.number_field :price_gteq %>円〜
   <%= f.number_field :price_lt %>円
+
+  <%= f.submit "検索" %>
+<% end %>
+
+<p id="notice"><%= notice %></p>
+<hr>
+
+<h1>理想</h1>
+<h3>※調べたいキーワーの項目を選択し、検索窓にキーワード入力し検索できる</h3>
+<%= search_form_for @q do |f| %>
+　<%= f.select :search_item, options_for_select(Book.search_items) %>
+
+  <%= f.label :title, "キーワードを入力" %>
+  <%= f.search_field :title_cont %>
 
   <%= f.submit "検索" %>
 <% end %>
@@ -21,6 +40,7 @@
     <tr>
       <th><%= sort_link(@q, :title, "タイトル") %></th>
       <th><%= sort_link(@q, :auther, "作者") %></th>
+      <th><%= sort_link(@q, :genre, "ジャンル") %></th>
       <th><%= sort_link(@q, :price, "価格") %></th>
       <th colspan="3"></th>
     </tr>
@@ -31,6 +51,7 @@
       <tr>
         <td><%= book.title %></td>
         <td><%= book.auther %></td>
+        <td><%= book.genre %></td>
         <td><%= book.price %></td>
         <td><%= link_to 'Show', book %></td>
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
